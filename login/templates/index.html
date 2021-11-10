@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hi, {{ user.username }}!</h1>
+    {% if current_user.is_anonymous %}
+    <a class="button" href="{{url_for('google.login')}}">Login with Google</a>
+    {% else %}
+    <a class="button" href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
+{% endblock %}

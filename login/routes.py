@@ -6,6 +6,7 @@ from flask_login import current_user, login_user, login_required, logout_user, L
 from login.resources.ProfileResources import Profile, OAuth, ProfileSchema, Address, AddressSchema
 from flask_dance.contrib.google import google
 from login import oauth
+from login import security
 
 app.register_blueprint(oauth.google_blueprint, url_prefix="/login")
 
@@ -22,6 +23,7 @@ def index():
 
 @app.route('/google', methods=['GET', 'POST'])
 def login_google():
+    print("here")
     if current_user.is_authenticated:
         return redirect(url_for("index"))
 
@@ -158,6 +160,7 @@ def users(id):
             rsp = Response("User info update success.", status=200, content_type='text/plain')
 
         elif request.method == 'POST':
+            print(request.data)
             info = json.loads(request.data)
             new_user = Profile(**Profile.parse_info(info))
             db.session.add(new_user)
@@ -206,3 +209,12 @@ def addresses(address_id):
         app.logger.error('Exception in addresses(address_id): {}'.format(exp))
         rsp = Response("Internal error", status=500, content_type='text/plain')
         return rsp
+
+
+@app.before_request
+def before_request_func():
+    if google.authorized:
+        return
+    is_good_to_go = security.check_security(request)
+    if not is_good_to_go:
+        return redirect(url_for('google.login'))

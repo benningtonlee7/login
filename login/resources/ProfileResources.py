@@ -41,7 +41,7 @@ class Address(db.Model):
 
 
 
-class AddressSchema(ma.SQLAlchemySchema):
+class AddressSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Address
 

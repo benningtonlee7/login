@@ -5,17 +5,17 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     # Local
-    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-    #                           'mysql+pymysql://{username}:' '{password}@{host}/{db_name}'.format(username="root",
-    #                                                                                              password="dbuser666",
-    #                                                                                              host="localhost",
-    #                                                                                              db_name="login")
-    # DB
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-                              'mysql+mysqlconnector://{username}:' '{password}@{host}/{db_name}'.format(username="admin",
-                                                                                                 password="Columbia2021",
-                                                                                                 host="ec2-db.cz3ufbylkv7z.us-east-2.rds.amazonaws.com",
+                              'mysql+pymysql://{username}:' '{password}@{host}/{db_name}'.format(username="root",
+                                                                                                 password="dbuser666",
+                                                                                                 host="localhost",
                                                                                                  db_name="login")
+    # DB
+    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+    #                           'mysql+mysqlconnector://{username}:' '{password}@{host}/{db_name}'.format(username="admin",
+    #                                                                                              password="Columbia2021",
+    #                                                                                              host="ec2-db.cz3ufbylkv7z.us-east-2.rds.amazonaws.com",
+    #                                                                                              db_name="login")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
 
